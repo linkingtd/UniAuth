@@ -1,6 +1,6 @@
 buildscript {
     repositories {
-        maven { url 'http://nexus.dianrong.com/nexus/content/groups/public/' }
+//        maven { url 'http://nexus.dianrong.com/nexus/content/groups/public/' }
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         jcenter()
         mavenCentral()
@@ -24,27 +24,27 @@ ext {
 }
 
 // Dianrong repo status set
-task checkDianrongRepoStatus() {
-    URL url = new URL("http://nexus.dianrong.com/nexus/#welcome");
-    URLConnection rulConnection = url.openConnection();
-    HttpURLConnection httpUrlConnection = (HttpURLConnection) rulConnection;
-    httpUrlConnection.setReadTimeout(1000);
-    try {
-        def responseCode = httpUrlConnection.getResponseCode();
-        if (responseCode == 200) {
-            dianrongRepoEnable = true;
-        } else {
-            dianrongRepoEnable = false;
-        }
-    } catch (Exception ex) {
-        dianrongRepoEnable = false;
-    }
-    if (dianrongRepoEnable) {
-        println 'DianRong repository is enable'
-    } else {
-        println 'DianRong repository is unable'
-    }
-}
+//task checkDianrongRepoStatus() {
+//    URL url = new URL("http://nexus.dianrong.com/nexus/#welcome");
+//    URLConnection rulConnection = url.openConnection();
+//    HttpURLConnection httpUrlConnection = (HttpURLConnection) rulConnection;
+//    httpUrlConnection.setReadTimeout(1000);
+//    try {
+//        def responseCode = httpUrlConnection.getResponseCode();
+//        if (responseCode == 200) {
+//            dianrongRepoEnable = true;
+//        } else {
+//            dianrongRepoEnable = false;
+//        }
+//    } catch (Exception ex) {
+//        dianrongRepoEnable = false;
+//    }
+//    if (dianrongRepoEnable) {
+//        println 'DianRong repository is enable'
+//    } else {
+//        println 'DianRong repository is unable'
+//    }
+//}
 
 allprojects {
     group = 'com.dianrong.common.uniauth'
@@ -60,7 +60,7 @@ allprojects {
     apply plugin: 'io.spring.dependency-management'
 
     repositories {
-        maven { url 'http://nexus.dianrong.com/nexus/content/groups/public/' }
+//        maven { url 'http://nexus.dianrong.com/nexus/content/groups/public/' }
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
     }
 
@@ -68,34 +68,34 @@ allprojects {
         mavenCentral()
     }
 
-    publishing {
-        publications.all {
-            pom.withXml {
-                asNode().dependencies.'*'.findAll() {
-                    it.scope.text() == 'runtime' && project.configurations.compile.allDependencies.find { dep ->
-                        dep.name == it.artifactId.text()
-                    }
-                }.each { it.scope*.value = 'compile' }
-            }
-        }
-        repositories {
-            maven {
-                if (project.version.endsWith('-SNAPSHOT')) {
-                    url 'http://nexus.dianrong.com/nexus/content/repositories/snapshots/'
-                } else {
-                    url 'http://nexus.dianrong.com/nexus/content/repositories/mirror/'
-                }
-            }
-
-            maven {
-                if (project.version.endsWith('-SNAPSHOT')) {
-                    url 'http://nexus.dianrong.com/nexus/content/repositories/snapshots/'
-                } else {
-                    url 'http://nexus.dianrong.com/nexus/content/repositories/internal/'
-                }
-            }
-        }
-    }
+//    publishing {
+//        publications.all {
+//            pom.withXml {
+//                asNode().dependencies.'*'.findAll() {
+//                    it.scope.text() == 'runtime' && project.configurations.compile.allDependencies.find { dep ->
+//                        dep.name == it.artifactId.text()
+//                    }
+//                }.each { it.scope*.value = 'compile' }
+//            }
+//        }
+//        repositories {
+//            maven {
+//                if (project.version.endsWith('-SNAPSHOT')) {
+//                    url 'http://nexus.dianrong.com/nexus/content/repositories/snapshots/'
+//                } else {
+//                    url 'http://nexus.dianrong.com/nexus/content/repositories/mirror/'
+//                }
+//            }
+//
+//            maven {
+//                if (project.version.endsWith('-SNAPSHOT')) {
+//                    url 'http://nexus.dianrong.com/nexus/content/repositories/snapshots/'
+//                } else {
+//                    url 'http://nexus.dianrong.com/nexus/content/repositories/internal/'
+//                }
+//            }
+//        }
+//    }
 
     compileJava.options.encoding = 'UTF-8'
     compileTestJava.options.encoding = 'UTF-8'
